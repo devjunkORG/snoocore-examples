@@ -16,7 +16,7 @@ View the documentation for more information.
 
 var readline = require('readline')
 , when = require('when')
-, Snoocore = require('../../Snoocore');
+, Snoocore = require('snoocore');
 
 var reddit = new Snoocore({ userAgent: 'snoocoreExample' });
 

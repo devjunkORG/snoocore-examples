@@ -15,7 +15,7 @@ View the full documentation for more information.
 */
 
 var when = require('when')
-, Snoocore = require('../../Snoocore');
+, Snoocore = require('snoocore');
 
 var reddit = new Snoocore({ userAgent: 'snoocoreExample' });
 

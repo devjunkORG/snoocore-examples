@@ -14,7 +14,7 @@ slices of information to fetch.
 */
 
 var when = require('when')
-, Snoocore = require('../../Snoocore');
+, Snoocore = require('snoocore');
 
 var reddit = new Snoocore({ userAgent: 'snoocoreExample' });
 

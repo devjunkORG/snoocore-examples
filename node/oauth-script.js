@@ -15,7 +15,7 @@ var readline = require('readline')
 , open = require('open')
 , when = require('when')
 , callbacks = require('when/callbacks')
-, Snoocore = require('../../Snoocore');
+, Snoocore = require('snoocore');
 
 var reddit = new Snoocore({ userAgent: 'snoocoreExample' });
 
@@ -40,7 +40,7 @@ function getOauthInfo() {
 
 	var question = callbacks.lift(rl.question.bind(rl));
 
-	return question('Redirect Username?\n> ').then(function(username) {
+	return question('Reddit Username?\n> ').then(function(username) {
 		answers.username = username;
 		return question('Reddit Password?\n> ');
 	}).then(function(password) {

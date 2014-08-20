@@ -1,0 +1,22 @@
+{
+  "name": "snoocore-examples",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Example code for the Node.js reddit wrapper Snoocore",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trevorsenior/snoocore-examples.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/trevorsenior/snoocore-examples/issues"
+  },
+  "homepage": "https://github.com/trevorsenior/snoocore-examples",
+  "dependencies": {
+    "open": "0.0.5",
+    "snoocore": "^1.5.1",
+    "when": "^3.4.4"
+  }
+}

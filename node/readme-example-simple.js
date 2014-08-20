@@ -9,7 +9,7 @@ A working example from the README
 
 */
 
-var Snoocore = require('../../Snoocore');
+var Snoocore = require('snoocore');
 var reddit = new Snoocore({ userAgent: 'myApp v0.0.0' });
 
 // Example code for http://www.reddit.com/dev/api#GET_new

@@ -10,7 +10,7 @@ throttle of Snoocore works.
 
 */
 
-var Snoocore = require('../../Snoocore');
+var Snoocore = require('snoocore');
 
 var reddit = new Snoocore({ userAgent: 'snoocoreExample' });
 
