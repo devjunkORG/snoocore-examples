@@ -8,8 +8,10 @@ You will need to install the necessary packages to try out the examples
 
 ```
 $ npm install
-** or **
-$ bower install
 ```
+
+## Running
+
+Check out the node / browser subdirectories for more information in their README files
 
 
