@@ -21,7 +21,7 @@ var when = require('when');
 var Snoocore = require('snoocore');
 
 var reddit = new Snoocore({
-  userAgent: 'Snoocore Examples GitHub: https://github.com/trevorsenior/snoocore-examples/tree/master'
+  userAgent: 'Snoocore Examples GitHub: https://github.com/trevorsenior/snoocore-examples'
 });
 
 /*
