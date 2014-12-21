@@ -1,33 +1,47 @@
+#!/usr/bin/env node
+
+/*
+
+A demonstration on how to handle a CAPTCHA request. To
+use this you will have to fill in your password before
+running the demo.
+
+*/
+
+var config = require('./exampleConfig');
+
+// Change these if you wish. Running this script will make a new
+// post in `bottest`.
+var SUBREDDIT = 'bottest';
+var TITLE = 'test post please ignore ' + String(Math.random() * 1000);
+var LINK = 'https://duckduckgo.com/?q=' + String(Math.random() * 1000);
 
 // node modules
 var readline = require('readline');
 
 // npm modules
-var open = require('open'); // version 0.0.5
-var when = require('when'); // version 3.6.3
-var Snoocore = require('snoocore'); // version 1.9.3
+var open = require('open');
+var when = require('when');
+var Snoocore = require('snoocore'); 
 
 // init snoocore (using cookie login for simplicity)
 var reddit = new Snoocore({
-  userAgent: '/api/submit test; /u/snoocore',
-  login: { username: 'snoocore', password: '*******' } // PUT IN YOUR PASSWORD HERE!
-});
-
-reddit.login().then(function() {
-  return submitLink(
-    'bottest',
-    'Testing trevorsenior/snoocore issue #62',
-    'https://github.com/trevorsenior/snoocore/issues/62');
-}).done(function(result) {
-  console.log(result);
-  // spit out any errors that we may have
-  result.json.errors.forEach(console.log);
+  userAgent: 'Snoocore Examples GitHub: https://github.com/trevorsenior/snoocore-examples',
+  login: { 
+    username: config.login.username,
+    password: config.login.password
+  },
+  oauth: {
+    type: 'script',
+    consumerKey: config.oauthScript.consumerKey,
+    consumerSecret: config.oauthScript.consumerSecret,
+    scope: [ 'submit' ]
+  }
 });
 
 // Ask the user a question on the command line - resolves
 // with their answer
 function askQuestion(questionText) {
-  var defer = when.defer();
   var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout });
@@ -93,3 +107,12 @@ function submitLink(sr_fullname, title, url) {
     });
   });
 }
+
+
+reddit.auth().then(function() {
+  return submitLink(SUBREDDIT, TITLE, LINK);
+}).done(function(result) {
+  console.log(result);
+  // spit out any errors that we may have
+  result.json.errors.forEach(console.log);
+});

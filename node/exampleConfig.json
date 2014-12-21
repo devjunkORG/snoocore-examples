@@ -1,0 +1,16 @@
+{
+  "login": {
+    "username": "snoocore",
+    "password": "RKS5k1Ag3rrWaM&&mob5"
+  },
+  "oauthScript": {
+    "consumerKey": "wU42GYDQ6PXvLA",
+    "consumerSecret": "m-MYktvFelfz_E85GLzBM09DMbU",
+    "redirectUri": "http://localhost:3000"
+  },
+  "oauthExplicit": {
+    "consumerKey": "UXPNWlG5W3FWYg",
+    "consumerSecret": "y7GsNwB88--MmrnVez_v7jYKO0I",
+    "redirectUri": "http://localhost:3000"
+  }
+}
