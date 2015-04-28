@@ -1,27 +1,14 @@
-#!/usr/bin/env node
-
 /*
 
-   EXAMPLE: oauth-web-permanent-1.js
+   EXAMPLE: oauth-explicit-temporary.js
 
-   This is the first in a series of two web based OAuth examples
-   denoted by the number at the end of the file.
-
-   It will demonstrate how you can store a refresh token for later
-   access to a users account without requesting access everytime.
-
-   In this first step, we authenticate "normally" by requesting the
-   user to allow our application to access their account, and
-   request a refresh token.
-
-   We want to store / remember the refresh token (perhaps in a
-   database). This will allow access to a users account without
-   having to request permission everytime they wish to use our
-   application.
+   An example of how to use web based OAuth. Note that this is for
+   a web OAuth with a duration that is temporary. If you need to
+   reauthenticate with a user without their permission later down
+   the road, or need access for more than an hour, take a look at
+   the explicit-permanent examples.
 
  */
-
-var config = require('./exampleConfig');
 
 var readline = require('readline');
 var url = require('url');
@@ -31,13 +18,14 @@ var callbacks = require('when/callbacks');
 var Snoocore = require('snoocore');
 
 var reddit = new Snoocore({
-  userAgent: 'Snoocore Examples GitHub: https://github.com/trevorsenior/snoocore-examples',
+  userAgent: 'Snoocore-examples@oauth-explicit-temporary',
   oauth: {
     type: 'explicit',
-    duration: 'permanent', // will allow us to authenticate for longer periods of time
-    consumerKey: config.oauthExplicit.consumerKey,
-    consumerSecret: config.oauthExplicit.consumerSecret,
-    redirectUri: config.oauthExplicit.redirectUri
+    duration: 'temporary',
+    key: 'FqF3WdkIVVGtlA',
+    secret: 'BKYTo8RgQqULqn8XdSFjEloWCy4',
+    redirectUri: 'https://localhost:3000',
+    scope: [ 'identity' ]
   }
 });
 
@@ -80,14 +68,13 @@ waitForResponseUrl().then(function(urlWithCode) {
   }
 
   // If there were no errors, and the state is valid, we can now
-  // authenticate using the authorization code
+  // authenticate!
   return reddit.auth(authorizationCode);
 
-}).then(function(refreshToken) {
+}).then(function() {
 
   // We are now authenticated
   console.log('\n\nWe are now authenticated!\n');
-  console.log('Refresh Token:', refreshToken); // save in a database for later use!
 
   // We can now make OAuth calls using the authenticated user.
   return reddit('/api/v1/me').get();
@@ -95,10 +82,5 @@ waitForResponseUrl().then(function(urlWithCode) {
 }).done(function(data) {
 
   console.log('\n\n', data);
-
-  // you should always deauthenticate when done with a users account
-  // e.g. "logout"
-  console.log('\n Deauthenticating... ');
-  return reddit.deauth(); // revoke the current access_token
 
 });

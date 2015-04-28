@@ -1,14 +1,8 @@
-#!/usr/bin/env node
-
 /*
-
-A demonstration on how to handle a CAPTCHA request. To
-use this you will have to fill in your password before
-running the demo.
-
-*/
-
-var config = require('./exampleConfig');
+   A demonstration on how to handle a CAPTCHA request. To
+   use this you will have to fill in your password before
+   running the demo.
+ */
 
 // Change these if you wish. Running this script will make a new
 // post in `bottest`.
@@ -22,19 +16,17 @@ var readline = require('readline');
 // npm modules
 var open = require('open');
 var when = require('when');
-var Snoocore = require('snoocore'); 
+var Snoocore = require('snoocore');
 
 // init snoocore (using cookie login for simplicity)
 var reddit = new Snoocore({
-  userAgent: 'Snoocore Examples GitHub: https://github.com/trevorsenior/snoocore-examples',
-  login: { 
-    username: config.login.username,
-    password: config.login.password
-  },
+  userAgent: 'Snoocore-examples@captcha',
   oauth: {
     type: 'script',
-    consumerKey: config.oauthScript.consumerKey,
-    consumerSecret: config.oauthScript.consumerSecret,
+    key: '',
+    secret: '',
+    username: '',
+    password: '',
     scope: [ 'submit' ]
   }
 });
@@ -64,8 +56,8 @@ function solveCaptcha(iden) {
   // If we passed in an identity, save some time and skip over the needs
   // captcha check - we already know that we need one.
   var needsCaptcha = iden ?
-		     when.resolve(true) :
-		     reddit('/api/needs_captcha.json').get();
+                     when.resolve(true) :
+                     reddit('/api/needs_captcha.json').get();
 
   return needsCaptcha.then(function(result) {
     // nothing needs to be solved
@@ -74,8 +66,8 @@ function solveCaptcha(iden) {
     // Use existing identity if passed in & mirror how reddit responds
     // Else, request a new iden from reddit
     return iden ?
-		   when.resolve({ json: { data: { iden: iden }}}) :
-		   reddit('/api/new_captcha').post({ api_type: 'json' });
+           when.resolve({ json: { data: { iden: iden }}}) :
+           reddit('/api/new_captcha').post({ api_type: 'json' });
 
   }).then(function(result) {
     var iden = result.json.data.iden;
@@ -108,11 +100,6 @@ function submitLink(sr_fullname, title, url) {
   });
 }
 
-
-reddit.auth().then(function() {
-  return submitLink(SUBREDDIT, TITLE, LINK);
-}).done(function(result) {
+return submitLink(SUBREDDIT, TITLE, LINK).done(function(result) {
   console.log(result);
-  // spit out any errors that we may have
-  result.json.errors.forEach(console.log);
 });

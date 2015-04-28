@@ -1,7 +1,4 @@
-#!/usr/bin/env node
-
 /*
-
    EXAMPLE: oauth-web-permanent-2.js
 
    Part two in a series, please run the first script
@@ -11,10 +8,7 @@
    This script demonstrates that once we have a refresh code,
    we can use it to re-authenticate a users account without
    having re-request access through the web interface.
-
  */
-
-var config = require('./exampleConfig');
 
 var readline = require('readline');
 var url = require('url');
@@ -24,13 +18,14 @@ var callbacks = require('when/callbacks');
 var Snoocore = require('snoocore');
 
 var reddit = new Snoocore({
-  userAgent: 'Snoocore Examples GitHub: https://github.com/trevorsenior/snoocore-examples',
+  userAgent: 'Snoocore-examples@oauth-explicit-permanent-2',
   oauth: {
     type: 'explicit',
-    duration: 'permanent', // will allow us to authenticate for longer periods of time
-    consumerKey: config.oauthExplicit.consumerKey,
-    consumerSecret: config.oauthExplicit.consumerSecret,
-    redirectUri: config.oauthExplicit.redirectUri
+    duration: 'permanent',
+    key: '',
+    secret: '',
+    redirectUri: '',
+    scope: [ 'identity' ]
   }
 });
 

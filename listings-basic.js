@@ -1,7 +1,4 @@
-#!/usr/bin/env node
-
 /*
-
    EXAMPLE: listing-basic.js
 
    Gives an example of how to use the listings  helper
@@ -10,14 +7,20 @@
    get the next slice of the listing, previous slice, etc.
 
    View the full documentation for more information.
-
- */
+*/
 
 var when = require('when');
 var Snoocore = require('snoocore');
 
+// Reddit app type "installed"
 var reddit = new Snoocore({
-  userAgent: 'Snoocore Examples GitHub: https://github.com/trevorsenior/snoocore-examples'
+  userAgent: 'Snoocore-examples@listings-basic',
+  oauth: {
+    type: 'implicit',
+    key: 'VqhNmheQrdsnlg',
+    redirectUri: 'http://jsfiddle.net/etcoxh71/',
+    scope: []
+  }
 });
 
 // Get information about a slice of a listing

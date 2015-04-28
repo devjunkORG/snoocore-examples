@@ -1,21 +1,25 @@
-#!/usr/bin/env node
-
 /*
-
    EXAMPLE: listing-iterate.js
 
    Gives examples of how to use the listing helper
    to iterate over a list until there are no more
    slices of information to fetch.
-
  */
 
 var when = require('when');
 var Snoocore = require('snoocore');
 
+// Reddit app type "installed"
 var reddit = new Snoocore({
-  userAgent: 'Snoocore Examples GitHub: https://github.com/trevorsenior/snoocore-examples'
+  userAgent: 'Snoocore-examples@listings-iterate',
+  oauth: {
+    type: 'implicit',
+    key: 'VqhNmheQrdsnlg',
+    redirectUri: 'http://jsfiddle.net/etcoxh71/',
+    scope: []
+  }
 });
+
 
 // Get information about a slice of a listing:
 function printSlice(slice) {
@@ -65,8 +69,6 @@ function getAll() {
 
 
 /*
-   - - -
-
    - - -
 
    EXAMPLE #2

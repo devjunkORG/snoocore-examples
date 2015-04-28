@@ -1,7 +1,7 @@
 {
   "name": "snoocore-examples",
   "private": true,
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Example code for the Node.js reddit wrapper Snoocore",
   "main": "index.js",
   "repository": {
@@ -16,7 +16,7 @@
   "homepage": "https://github.com/trevorsenior/snoocore-examples",
   "dependencies": {
     "open": "0.0.5",
-    "snoocore": "2.1.0",
+    "snoocore": "3.0.0",
     "when": "^3.4.4"
   }
 }
