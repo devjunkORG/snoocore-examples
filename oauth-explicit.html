@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<!--
+
+*) Create an `installed` app on reddit, and make the redirectUri:
+
+http://localhost:3000/oauth-explicit.html
+
+*) Change the values of Snoocore below to match your new reddit app
+
+*) Start a local server in this directory.
+
+If you are using Python 2, you can go about doing this with:
+
+$ cd /path/to/snoocore-examples
+$ python -m SimpleHTTPServer 3000
+$ Serving HTTP on 0.0.0.0 port 3000...
+
+*) Open your browser to http://localhost:3000/oauth-explicit.html & follow steps
+
+-->
+<html>
+  <head>
+    <title>Explicit OAuth authentication (without a server)</title>
+  </head>
+  <body>
+
+    <h1>Explicit OAuth authentication (without a server)</h1>
+    <h2>#1.) Authenticate</h2>
+    <a href="#" id="auth_url">Click here to authenticate</a><br>
+
+    <h2>#2.)</h2>
+    <h2>Subscribe to a subreddit</h2>
+    <input id="subreddit" type="text" value="netsec" />
+    <input type="submit"
+           onclick="window.subscribe()"
+           value="Subscribe or Unsubscribe!" /><br>
+
+    <!-- @TODO
+    <h2>Upload a new header for a subreddit</h2>
+    This test shows that you can upload images on the client side without a
+    server! It will change the header image of a subreddit that you have the
+    permissions to change.<br/><br/>
+
+    <label>Subreddit you control: <input id="mod_subreddit" value="trevorsenior" type="text" /></label>
+    <br/><br/>
+    <label>Choose a header image:
+      <input id="sub_header_image" type="file" />
+    </label><br/><br/><br/>
+    <input type="submit" onclick="window.changeHeader()" value="Change Subreddit Header Image!" /><br/>
+    -->
+
+    <h2>Output Panel</h2>
+    <pre id="out"></pre><br>
+
+    <h2>#3.)</h2>
+    <a href="#" onclick="window.deauth()">deauth</a><br>
+
+    <script src="../../node_modules/snoocore/dist/Snoocore-browser.min.js"></script>
+    <script type="text/javascript">
+     (function() {
+
+       var Snoocore = window.Snoocore;
+
+       var reddit = new Snoocore({
+         userAgent: 'Snoocore-examples@oauth-explicit',
+         oauth: {
+           type: 'explicit',
+           key: 'L8LBLvlMavGzQg',
+           // blank! don't want to have a secret in client side JavaScript
+           secret: '',
+           redirectUri: 'http://localhost:3000/oauth-explicit.html',
+           scope: [ 'identity', 'read', 'subscribe', 'modconfig' ]
+         }
+       });
+
+       // Get the implicit auth url for this app and set the link's href
+       document.getElementById('auth_url').href = reddit.getExplicitAuthUrl();
+
+       // Check if we have a code in the search/querystring, if so
+       // we can authenticate with reddit and make our call!
+       var match = ('' + window.location.search).match(/code=(.*?)$/);
+       var code = match ? match[1] : '';
+
+       console.log(window.location.search);
+       console.log(match);
+       console.log(code);
+
+       if (code) {
+         reddit.auth(code).then(function() {
+           // remove the authenticate url
+           return reddit('/api/v1/me').get();
+         }).done(function(result) {
+           document.getElementById('out').innerText = JSON.stringify(result, null, 2);
+         });
+       }
+
+       /*
+          Deauthenticate with reddit
+       */
+       window.deauth = function() {
+         return reddit.deauth().done(function() {
+           document.getElementById('out').innerText = 'deauthenticated!';
+         });
+       };
+
+
+       /*
+          Subscribe to a subreddit
+       */
+       window.subscribe = function() {
+         var subreddit = document.getElementById('subreddit').value;
+
+         // Get existing information about the subreddit
+         return reddit('/r/$subreddit/about.json').get({
+           $subreddit: subreddit
+         }).then(function(result) {
+
+           var subFullname = result.data.name; // fullname of the subreddit provided
+           var isSubbed = result.data.user_is_subscriber; // are we subbed or not?
+
+           // subscribe or unsubscribe from the subreddit
+           return reddit('api/subscribe').post({
+             action: isSubbed ? 'unsub' : 'sub',
+             sr: subFullname
+           }).tap(function() {
+             var text = (isSubbed ? 'un' : '') + 'subscribed' + ' ' +
+                              (isSubbed ? 'from' : 'to') +
+                        ' the subreddit ' + subreddit;
+             document.getElementById('out').innerText = text;
+           });
+         }).catch(function(error) {
+           document.getElementById('out').innerText = String(error);
+         });
+       };
+
+
+       /*
+          @TODO
+
+          Change subreddit header. This is a work in progress / does not work
+          with Snoocore yet. Need to mess around with HTML5 File's a bit more.
+       */
+       window.changeHeader = function() {
+
+         var file = document.getElementById('sub_header_image').files[0];
+         var subredditToUse = document.getElementById('mod_subreddit').value;
+
+         if (!file || !subredditToUse) {
+           document.getElementById('out').innerText = String('missing file or subreddit');
+           return;
+         }
+
+         var reader = new FileReader();
+
+         reader.onloadend = function() {
+           return reddit('/r/$subreddit/api/upload_sr_img').post({
+             $subreddit: subredditToUse,
+             // Get the file information from what the user uploaded.
+             // Snoocore.file expects the filename, mimeType, and the
+             // raw data in a buffer / utf8 string. In this case, we
+             // give it a utf8 string of the data!
+             file: Snoocore.file(file.name, file.type, reader.result),
+             header: 1,
+             img_type: 'png',
+             name: 'test-foo-bar'
+           }).tap(function() {
+             var text = 'Sucessfully changed the subreddit header image!';
+             document.getElementById('out').innerText = text;
+           }).catch(function(error) {
+             document.getElementById('out').innerText = String(error);
+           });
+         }
+
+         reader.readAsText(file);
+       };
+
+
+     })();
+    </script>
+  </body>
+</html>
