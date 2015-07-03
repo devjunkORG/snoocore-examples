@@ -15,6 +15,7 @@
   },
   "homepage": "https://github.com/trevorsenior/snoocore-examples",
   "dependencies": {
+    "bluebird": "^2.9.30",
     "express": "^4.12.4",
     "open": "0.0.5",
     "snoocore": "3.0.0",

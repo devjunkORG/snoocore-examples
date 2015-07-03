@@ -1,0 +1,12 @@
+[4098:0702/195527:INFO:renderer_main.cc(200)] Renderer process started
+[4099:0702/195527:INFO:renderer_main.cc(200)] Renderer process started
+[4100:0702/195530:INFO:renderer_main.cc(200)] Renderer process started
+Unhandled rejection Error: User closed the authentication window!
+    at BrowserWindow.<anonymous> (/Users/trev/git/snoocore-examples/electron/main.js:67:14)
+    at emitOne (events.js:77:13)
+    at BrowserWindow.emit (events.js:169:7)
+[4100:0702/195534:WARNING:proxy_message_pipe_endpoint.cc(50)] Failed to write enqueue message to channel
+[4100:0702/195534:WARNING:channel.cc(549)] Failed to send message to ack remove remote endpoint (local ID 1, remote ID 1)
+[4100:0702/195534:WARNING:channel.cc(549)] Failed to send message to ack remove remote endpoint (local ID 2147483648, remote ID 2)
+[4099:0702/195535:WARNING:channel.cc(549)] Failed to send message to ack remove remote endpoint (local ID 2147483648, remote ID 2)
+[4098:0702/195535:WARNING:channel.cc(549)] Failed to send message to ack remove remote endpoint (local ID 2147483648, remote ID 2)
