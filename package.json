@@ -18,7 +18,7 @@
     "bluebird": "^2.9.30",
     "express": "^4.12.4",
     "open": "0.0.5",
-    "snoocore": "3.0.0",
+    "snoocore": "3.2.0",
     "when": "^3.4.4"
   }
 }
