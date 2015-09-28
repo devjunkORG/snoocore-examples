@@ -34,7 +34,7 @@ app.get('/', function (req, res) {
     var accountId = req.cookies ? req.cookies.account_id : void 0;
 
     // We have an account, redirect to the authenticated route
-    if (accountId) {
+    if (accountId && typeof accounts[accountId] === 'function') {
         return res.redirect('/me');
     }
 
@@ -47,7 +47,7 @@ app.get('/me', function(req, res) {
     var accountId = req.cookies ? req.cookies.account_id : void 0;
 
     // If the user has not authenticated bump them back to the main route
-    if (!accountId) {
+    if (!accountId || typeof accounts[accountId] === 'undefined') {
         return res.redirect('/');
     }
 
@@ -60,14 +60,13 @@ app.get('/me', function(req, res) {
 // does not account for hitting "deny" / etc. Assumes that
 // the user has pressed "allow"
 app.get('/reddit_redirect', function(req, res) {
-
     var accountId = ++uniqId; // an account id for this instance
     var instance = getInstance(); // an account instance
 
     // In a real app, you would save the refresh token in
     // a database / etc for use later so the user does not have
     // to allow your app every time...
-    return instance.auth(req.code).then(function(refreshToken) {
+    return instance.auth(req.query.code).then(function(refreshToken) {
         // Store the account (Snoocore instance) into the accounts hash
         accounts[accountId] = instance;
 
