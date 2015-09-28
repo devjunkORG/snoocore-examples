@@ -22,8 +22,8 @@ function getInstance(accountId) {
         oauth: {
             type: 'explicit',
             duration: 'permanent',
-            key: 'I5eqIja97ZhCnQ', // not an actual working key, use your own
-            secret: 'JCb_4xYYMRqy3M2P-zKl_Dw-sgw', // not an actual working secret, use your own
+            key: 'GgiKySyVhN-rXQ', // not an actual working key, use your own
+            secret: 'V9bG7DkWA76y_mHr2rJ_EnTUUn8', // not an actual working secret, use your own
             redirectUri: 'http://localhost:3000/reddit_redirect',
             scope: [ 'identity' ]
         }

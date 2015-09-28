@@ -16,7 +16,7 @@
   "homepage": "https://github.com/trevorsenior/snoocore-examples",
   "dependencies": {
     "bluebird": "^2.9.30",
-    "cookieparser": "^0.1.0",
+    "cookie-parser": "^1.4.0",
     "express": "^4.12.4",
     "open": "0.0.5",
     "snoocore": "3.2.0",

@@ -7,7 +7,7 @@ Open the application in two browsers and authenticate with different accounts to
 
 ## Required setup
 
-- Make an app on reddit using explicit OAuth.
+- Make an app on reddit using explicit OAuth (web app).
 - Set the redirectUri to be: http://localhost:3000/reddit_redirect
 
 ![http://i.imgur.com/s3eTGSo.png]()
