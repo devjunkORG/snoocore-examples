@@ -80,6 +80,8 @@ app.get('/reddit_redirect', function(req, res) {
 
         // redirect to the authenticated route
         return res.redirect('/me');
+    }, (data) => {
+        return res.json(JSON.parse(data.body));
     });
 
 });
